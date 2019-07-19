@@ -84,7 +84,7 @@ class Formulas extends BasePlugin {
     this.addHook('afterColumnSort', (...args) => this.onAfterColumnSort(...args));
     this.addHook('afterCreateCol', (...args) => this.onAfterCreateCol(...args));
     this.addHook('afterCreateRow', (...args) => this.onAfterCreateRow(...args));
-    this.addHook('afterLoadData', () => this.onAfterLoadData());
+    this.addHook('afterLoadData', (...args) => this.onAfterLoadData(...args));
     this.addHook('afterRemoveCol', (...args) => this.onAfterRemoveCol(...args));
     this.addHook('afterRemoveRow', (...args) => this.onAfterRemoveRow(...args));
     this.addHook('afterSetDataAtCell', (...args) => this.onAfterSetDataAtCell(...args));
@@ -405,9 +405,11 @@ class Formulas extends BasePlugin {
    *
    * @private
    */
-  onAfterLoadData() {
-    this._skipRendering = true;
-    this.recalculateFull();
+  onAfterLoadData(firstRun) {
+    if (firstRun) {
+      this._skipRendering = true;
+      this.recalculateFull();
+    }
   }
 
   /**

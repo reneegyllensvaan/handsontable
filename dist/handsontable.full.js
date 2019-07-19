@@ -29,7 +29,7 @@
  * FROM USE OR INABILITY TO USE THIS SOFTWARE.
  * 
  * Version: 7.1.0
- * Release date: 11/06/2019 (built at 10/06/2019 10:35:58)
+ * Release date: 11/06/2019 (built at 19/07/2019 04:18:31)
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -58701,7 +58701,7 @@ Handsontable.EventManager = _eventManager.default;
 Handsontable._getListenersCounter = _eventManager.getListenersCounter; // For MemoryLeak tests
 
 Handsontable.packageName = 'handsontable';
-Handsontable.buildDate = "10/06/2019 10:35:58";
+Handsontable.buildDate = "19/07/2019 04:18:31";
 Handsontable.version = "7.1.0"; // Export Hooks singleton
 
 Handsontable.hooks = _pluginHooks.default.getSingleton(); // TODO: Remove this exports after rewrite tests about this module
@@ -97625,7 +97625,7 @@ function (_BasePlugin) {
         return _this2.onAfterCreateRow.apply(_this2, arguments);
       });
       this.addHook('afterLoadData', function () {
-        return _this2.onAfterLoadData();
+        return _this2.onAfterLoadData.apply(_this2, arguments);
       });
       this.addHook('afterRemoveCol', function () {
         return _this2.onAfterRemoveCol.apply(_this2, arguments);
@@ -98027,9 +98027,11 @@ function (_BasePlugin) {
 
   }, {
     key: "onAfterLoadData",
-    value: function onAfterLoadData() {
-      this._skipRendering = true;
-      this.recalculateFull();
+    value: function onAfterLoadData(firstRun) {
+      if (firstRun) {
+        this._skipRendering = true;
+        this.recalculateFull();
+      }
     }
     /**
      * Destroys the plugin instance.
